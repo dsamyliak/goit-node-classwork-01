@@ -1,3 +1,6 @@
+const yargs = require("yargs");
+const { hideBin } = require("yargs/helpers");
+
 const contacts = require("./db");
 
 
@@ -26,4 +29,18 @@ const invokeAction = async ({ action, id, name, email, phone }) => {
   }
 };
 
-console.log(process.argv);
+// console.log(process.argv);
+
+// const actionIndex = process.argv.indexOf("--action");
+// if (actionIndex !== -1) {
+//   const action = process.argv[actionIndex + 1];
+//   invokeAction({action})
+// };
+
+const arr = hideBin(process.argv);
+// console.log(arr);
+
+const { argv } = yargs(arr);
+// console.log(argv);
+
+invokeAction(argv);
