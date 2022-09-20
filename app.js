@@ -1,8 +1,12 @@
+//yargs
 const yargs = require("yargs");
 const { hideBin } = require("yargs/helpers");
 
-const contacts = require("./db");
+//commander
+const { program } = require("commander");
 
+//contacts and action
+const contacts = require("./db");
 
 const invokeAction = async ({ action, id, name, email, phone }) => {
   switch (action) {
@@ -29,18 +33,33 @@ const invokeAction = async ({ action, id, name, email, phone }) => {
   }
 };
 
-// console.log(process.argv);
-
 // const actionIndex = process.argv.indexOf("--action");
 // if (actionIndex !== -1) {
 //   const action = process.argv[actionIndex + 1];
 //   invokeAction({action})
 // };
 
-const arr = hideBin(process.argv);
+//yargs
+// console.log(process.argv);
+// const arr = hideBin(process.argv);
 // console.log(arr);
 
-const { argv } = yargs(arr);
+// const { argv } = yargs(arr);
 // console.log(argv);
 
-invokeAction(argv);
+// invokeAction(argv);
+
+//commander
+program
+  .option("-a, --action <type>")
+  .option("-i, --id <type>")
+  .option("-n, --name <type>")
+  .option("-em, --email <type>")
+  .option("-ph, --phone <type>");
+
+// program.parse(process.argv); ||
+program.parse();
+
+const options = program.opts();
+console.log(options);
+invokeAction(options);
